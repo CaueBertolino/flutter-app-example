@@ -1,4 +1,8 @@
+import 'package:adaptive_app/buttons.dart';
 import 'package:flutter/material.dart';
+import './textup.dart';
+import './textdown.dart';
+
 
 void main (){
   runApp(MyApp());
@@ -8,49 +12,50 @@ class MyApp extends StatefulWidget{
   
   @override
   State<StatefulWidget> createState() {
-    return MyAppState();
+    return _MyAppState();
   }
 
 }
 
 
-class MyAppState extends State {
+class _MyAppState extends State<MyApp> {
 
   //variables declaration
-  var texts = [
+  var _texts = [
     {'textUp': 'Hello World', 'textDown': 'App Example'},
     {'textUp': 'Simple Phrase Changing APP', 'textDown': 'The text changes when the arrows are pressed'},
     {'textUp': 'Data is the new oil', 'textDown': 'Flutter testing / studies'}
   ];
-  var textIndex = 0;
+
+  var _textIndex = 0;
 
   //functions declaration
-  buttonChangeText(String direction){
+  void _buttonChangeText(String direction){
     if(direction == "next"){
-      if(textIndex != texts.length -1){
+      if(_textIndex != _texts.length -1){
         setState( (){
-          textIndex ++;
+          _textIndex ++;
         });
       } else {
-        setState( (){
-          textIndex = 0;
+        setState((){
+          _textIndex = 0;
         });
       }
     } else if(direction == "prev"){
-      if(textIndex != 0){
-        setState( (){
-          textIndex --;
+      if(_textIndex != 0){
+        setState((){
+          _textIndex --;
         });
       } else {
-        setState( (){
-          textIndex = texts.length -1;
+        setState((){
+          _textIndex = _texts.length -1;
         });
       }
     }
 
   }
 
-
+  @override
   Widget build(BuildContext context){
     
     return MaterialApp(
@@ -59,65 +64,13 @@ class MyAppState extends State {
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
             children: <Widget>[
-              Container(
-                child: Text(
-                  texts[textIndex]['textUp'] as String,
-                  style: TextStyle(
-                    fontSize: 27.5,
-                    fontWeight: FontWeight.bold
-                  ),
-                  textAlign: TextAlign.center
-                ),
-                margin: EdgeInsets.all(25)
-              ),
-              Container(
-                child: Text(
-                  texts[textIndex]['textDown'] as String,
-                  style: TextStyle(
-                    fontSize: 20
-                  ),
-                  textAlign: TextAlign.center
-                ),
-                margin: EdgeInsets.fromLTRB(15, 25, 15, 45)
-              ),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  Container(
-                    margin: EdgeInsets.fromLTRB(15, 0, 15, 0),
-                    child: FloatingActionButton(
-                      onPressed: (){
-                        buttonChangeText("prev");
-                      },
-                      child: Icon(
-                        Icons.arrow_left_rounded,
-                        size: 60,
-                        color: Colors.black
-                      ),
-                      backgroundColor: Color.fromRGBO(251, 211, 52, 1)
-                    )
-                  ),
-                  Container(
-                    margin: EdgeInsets.fromLTRB(15, 0, 15, 0),
-                    child: FloatingActionButton(
-                      onPressed: (){
-                        buttonChangeText("next");
-                      },
-                      child: Icon(
-                        Icons.arrow_right_rounded,
-                        size: 60,
-                        color: Colors.black
-                      ),
-                      backgroundColor: Color.fromRGBO(251, 211, 52, 1)
-                    )
-                  )
-                ])
+              TextUp(textup: _texts[_textIndex]['textUp'] as String),
+              TextDown(textdown: _texts[_textIndex]['textDown'] as String),
+              Buttons(buttonChangeText: _buttonChangeText)
             ],
           ),
         )
       )
     );
-
   }
-
 }
