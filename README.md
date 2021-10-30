@@ -1,5 +1,5 @@
 # Flutter App
-Tutorial to lear the basics of the framework
+Tutorial to learn the basics of the framework
 Tutotial: https://www.youtube.com/watch?v=68wS5MTNAJo
 
 # Useful commands
